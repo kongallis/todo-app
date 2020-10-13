@@ -7,7 +7,7 @@
         <input type="checkbox">
         <div class="todo-item-label">{{ todo.title }}</div>
     </div>
-    <div class="remove-item">
+    <div class="remove-item" (click)="deleteTodo(todo.id)">
         &times;
     </div>
 </div>
