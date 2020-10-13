@@ -11,10 +11,12 @@ export class TodoListComponent implements OnInit {
   todoTitle: string;
   idForTodo: number;
   beforeEditCache: string;
+  filter: string;
 
   constructor() { }
 
   ngOnInit(): void {
+    this.filter = "all";
     this.todoTitle = '';
     this.idForTodo = 4;
     this.beforeEditCache = '';
@@ -99,6 +101,19 @@ export class TodoListComponent implements OnInit {
   //Checks all todos
   checkAllTodos(): void {
     this.todos.forEach(todo => todo.completed = (<HTMLInputElement>event.target).checked) 
+  }
+
+  //Filters todos based on the filter
+  todosFiltered(): Todo[] {
+    if (this.filter === 'all') {
+      return this.todos;
+    } else if (this.filter === 'active') {
+      return this.todos.filter(todo => !todo.completed);
+    } else if (this.filter === 'completed') {
+      return this.todos.filter(todo => todo.completed);
+    }
+
+    return this.todos;
   }
 }
 

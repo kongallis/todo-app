@@ -2,7 +2,7 @@
 
 <input type="text" class="todo-input" placeholder="What needs to be done" [(ngModel)]="todoTitle" (keyup.enter)="addTodo()">
 
-<div class="todo-item" *ngFor="let todo of todos">
+<div class="todo-item" *ngFor="let todo of todosFiltered()">
     <div class="todo-item-left">
         <input type="checkbox" [(ngModel)]="todo.completed">
         <div *ngIf="!todo.editing; else editingTodo" class="todo-item-label" (dblclick)="editTodo(todo)" [ngClass]="{ 'completed' : todo.completed }">{{ todo.title }}</div>
@@ -23,9 +23,9 @@
 
 <div class="extra-container">
     <div>
-        <button class="active">All</button>
-        <button>Active</button>
-        <button>Completed</button>
+        <button [ngClass]="{'active': filter === 'all'}" (click)="filter='all'">All</button>
+        <button [ngClass]="{'active': filter === 'active'}" (click)="filter='active'">Active</button>
+        <button [ngClass]="{'active': filter === 'completed'}" (click)="filter='completed'">Completed</button>
     </div>
 </div>
 <div *ngIf="atLeastOneCompleted()">
