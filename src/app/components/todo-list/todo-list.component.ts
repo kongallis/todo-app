@@ -23,11 +23,11 @@ import { Todo } from '../../interfaces/todo'
 })
 
 export class TodoListComponent implements OnInit {
-  todos: Todo[];
+  filter: string;
   todoTitle: string;
   idForTodo: number;
   beforeEditCache: string;
-  filter: string;
+  todos: Todo[];
 
   constructor() { }
 
@@ -60,12 +60,11 @@ export class TodoListComponent implements OnInit {
 
   // Adds a todo to the list
   addTodo(): void {
-
     if (this.todoTitle.trim().length === 0) {
       return;
     }
     this.todos.push({
-      id: 4,
+      id: this.idForTodo,
       title: this.todoTitle,
       completed: false,
       editing: false
