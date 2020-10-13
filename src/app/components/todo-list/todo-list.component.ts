@@ -80,5 +80,20 @@ export class TodoListComponent implements OnInit {
     todo.editing = false;
   }
 
+  //Calculates the number of items left
+  remaining(): number {
+    return this.todos.filter(todo => !todo.completed).length; 
+  }
+
+
+  //Toggle "Clear Completed" button
+  atLeastOneCompleted(): boolean {
+    return this.todos.filter(todo => todo.completed).length > 0;
+  }
+
+  //Clears completed tasks
+  clearCompleted(): void {
+    this.todos = this.todos.filter(todo => !todo.completed);
+  }
 }
 

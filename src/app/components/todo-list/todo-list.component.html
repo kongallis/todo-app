@@ -18,7 +18,7 @@
 <div class="extra-container"><div>
     <label ><input type="checkbox"> Check All</label>
 </div>
-<div>4 items left</div>
+<div>{{ remaining() }} items left</div>
 </div>
 
 <div class="extra-container">
@@ -27,4 +27,7 @@
         <button>Active</button>
         <button>Completed</button>
     </div>
+</div>
+<div *ngIf="atLeastOneCompleted()">
+    <button (click)="clearCompleted()">Clear completed</button>
 </div>
