@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Todo } from '../../interfaces/todo'
 
 @Component({
   selector: 'todo-list',
@@ -55,15 +56,10 @@ export class TodoListComponent implements OnInit {
 
   //Deletes a todo from the list
   deleteTodo(id: number): void {
+    console.log(id);
     this.todos = this.todos.filter(todo => todo.id !== id);
   }
 
 
 }
 
-interface Todo {
-  id: number;
-  title: string;
-  completed: boolean;
-  editing: boolean;
-}
