@@ -1,0 +1,27 @@
+
+<!-- TODO-ITEM COMPONENT -->
+<div class="todo-item">
+    <div class="todo-item-left">
+        <input type="checkbox" [(ngModel)]="todo.completed">
+
+        <!-- SHOW BELOW ITEM IF EDITING IS FALSE -->
+        <div *ngIf="!todo.editing; else editingTodo"
+            class="todo-item-label"
+          (dblclick)="editTodo(todo)"
+           [ngClass]="{ 'completed' : todo.completed }">
+           {{ todo.title }}
+        </div>
+        <!-- ELSE CASE OF ABOVE COMPARISON -->
+        <ng-template #editingTodo>
+            <input type="text"
+            class="todo-item-edit"
+            [(ngModel)]="todo.title"
+            autofocus (blur)="doneEdit(todo)"
+            (keyup.enter)="doneEdit(todo)"
+            (keyup.esc)="cancelEdit(todo)">
+        </ng-template>
+    </div>
+    <div class="remove-item" (click)="deleteTodo(todo)">
+        &times;
+    </div>
+</div>

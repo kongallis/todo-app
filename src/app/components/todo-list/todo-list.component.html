@@ -2,19 +2,18 @@
 
 <input type="text" class="todo-input" placeholder="What needs to be done" [(ngModel)]="todoTitle" (keyup.enter)="addTodo()">
 
-<div class="todo-item" *ngFor="let todo of todosFiltered()" @fade>
-    <div class="todo-item-left">
-        <input type="checkbox" [(ngModel)]="todo.completed">
-        <div *ngIf="!todo.editing; else editingTodo" class="todo-item-label" (dblclick)="editTodo(todo)" [ngClass]="{ 'completed' : todo.completed }">{{ todo.title }}</div>
-        <ng-template #editingTodo>
-        <input type="text" class="todo-item-edit" [(ngModel)]="todo.title" autofocus (blur)="doneEdit(todo)"
-        (keyup.enter)="doneEdit(todo)" (keyup.esc)="cancelEdit(todo)">
-    </ng-template>
-    </div>
-    <div class="remove-item" (click)="deleteTodo(todo.id)">
-        &times;
-    </div>
-</div>
+<!-- Child component -->
+<todo-item
+ *ngFor="let todo of todosFiltered()"
+  [todo]="todo"
+  (checkedItem)="doneEdit($event)"
+  (doubleClickedItem)="editTodo($event)"
+  (blurredItem)="doneEdit($event)"
+  (enteredItem)="doneEdit($event)"
+  (cancelledItem)="cancelEdit($event)"
+  (deletedItem)="deleteTodo($event)"
+  ></todo-item>
+
 <div class="extra-container"><div>
     <label ><input type="checkbox" (change)="checkAllTodos()"> Check All</label>
 </div>
@@ -23,6 +22,7 @@
 
 <div class="extra-container">
     <div>
+        <!-- Regards to the filter, the respective button is active -->
         <button [ngClass]="{'active': filter === 'all'}" (click)="filter='all'">All</button>
         <button [ngClass]="{'active': filter === 'active'}" (click)="filter='active'">Active</button>
         <button [ngClass]="{'active': filter === 'completed'}" (click)="filter='completed'">Completed</button>

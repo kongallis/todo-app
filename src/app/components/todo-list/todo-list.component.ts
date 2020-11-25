@@ -5,7 +5,7 @@ import { Todo } from '../../interfaces/todo'
 @Component({
   selector: 'todo-list',
   templateUrl: './todo-list.component.html',
-  styleUrls: ['./todo-list.component.scss'],
+  styleUrls: ['./todo-list.component.css'],
   animations: [
     trigger('fade', [
 
@@ -63,6 +63,7 @@ export class TodoListComponent implements OnInit {
     if (this.todoTitle.trim().length === 0) {
       return;
     }
+
     this.todos.push({
       id: this.idForTodo,
       title: this.todoTitle,
@@ -75,16 +76,17 @@ export class TodoListComponent implements OnInit {
 
   //Deletes a todo from the list
   deleteTodo(id: number): void {
-    console.log(id);
-    this.todos = this.todos.filter(todo => todo.id !== id);
+    this.todos = this.todos
+      .filter(todo => todo.id !== id);
   }
   
-  //Edits a todo item
+  //Edits a todo item when you double click on todo
   editTodo(todo: Todo): void {
     this.beforeEditCache = todo.title;
     todo.editing = true; 
   }
 
+  // If you leave the todo empty the beforeCache title is filled
   doneEdit(todo: Todo): void {
     if (todo.title.trim().length == 0) {
       todo.title = this.beforeEditCache;
@@ -92,33 +94,40 @@ export class TodoListComponent implements OnInit {
     todo.editing = false;
   }
 
+  // The beforeCache title  is filled when you press the Escape button
   cancelEdit(todo: Todo): void {
     todo.title = this.beforeEditCache;
     todo.editing = false;
   }
 
-  //Calculates the number of items left
+  //Calculates the number of todos left
   remaining(): number {
-    return this.todos.filter(todo => !todo.completed).length; 
+    return this.todos
+    .filter(todo => !todo.completed).length; 
   }
 
 
   //Toggle "Clear Completed" button
   atLeastOneCompleted(): boolean {
-    return this.todos.filter(todo => todo.completed).length > 0;
+    return this.todos
+    .filter(todo => todo.completed).length > 0;
   }
 
   //Clears completed tasks
   clearCompleted(): void {
-    this.todos = this.todos.filter(todo => !todo.completed);
+    this.todos = this.todos
+    .filter(todo => !todo.completed);
   }
 
-  //Checks all todos
+  //Checks all todos to completed
   checkAllTodos(): void {
-    this.todos.forEach(todo => todo.completed = (<HTMLInputElement>event.target).checked) 
+    this.todos
+      .forEach(
+        todo => todo.completed = (<HTMLInputElement>event.target)
+        .checked) 
   }
 
-  //Filters todos based on the filter
+  //Filters todos based on selected filter option
   todosFiltered(): Todo[] {
     if (this.filter === 'all') {
       return this.todos;
