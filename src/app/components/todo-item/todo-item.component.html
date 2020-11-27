@@ -7,7 +7,7 @@
         <!-- SHOW BELOW ITEM IF EDITING IS FALSE -->
         <div *ngIf="!todo.editing; else editingTodo"
             class="todo-item-label"
-          (dblclick)="editTodo(todo)"
+          (dblclick)="todoService.editTodo(todo)"
            [ngClass]="{ 'completed' : todo.completed }">
            {{ todo.title }}
         </div>
@@ -16,12 +16,13 @@
             <input type="text"
             class="todo-item-edit"
             [(ngModel)]="todo.title"
-            autofocus (blur)="doneEdit(todo)"
-            (keyup.enter)="doneEdit(todo)"
-            (keyup.esc)="cancelEdit(todo)">
+            autofocus (blur)="todoService.doneEdit(todo)"
+            (keyup.enter)="todoService.doneEdit(todo)"
+            (keyup.esc)="todoService.cancelEdit(todo)">
         </ng-template>
     </div>
-    <div class="remove-item" (click)="deleteTodo(todo)">
+    <div class="remove-item"
+     (click)="todoService.deleteTodo(todo.id)">
         &times;
     </div>
 </div>
